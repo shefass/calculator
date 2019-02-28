@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import data from "./data";
 import Button from "./Button";
-
 import {
   hendleDecimal,
   hendleEquals,
   hendleNumber,
-  hendleSubstract,
-  hendleAction
+  hendleAction,
+  hendleClear
 } from "../redux/actions";
 
 const mapDispatchToProps = dispatch => {
@@ -19,10 +17,10 @@ const mapDispatchToProps = dispatch => {
         dispatch(hendleEquals(id));
       } else if (id === ".") {
         dispatch(hendleDecimal(id));
-      } else if (id === "-") {
-        dispatch(hendleSubstract(id));
-      } else if (id === "*" || id === "/" || id === "+") {
+      } else if (id === "*" || id === "/" || id === "+" || id === "-") {
         dispatch(hendleAction(id));
+      } else if (id === "AC") {
+        dispatch(hendleClear(id));
       } else {
         dispatch(hendleNumber(id));
       }
@@ -38,34 +36,22 @@ class Keyboard extends Component {
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
     document.addEventListener("keyup", this.handleKeyUp);
-    data.map(a =>
+    this.unsubscribePointerDown = data.map(a =>
       document.getElementById(a.id).addEventListener("pointerdown", this.click)
     );
-    data.map(a =>
+    this.unsubscribePointerEnter = data.map(a =>
       document.getElementById(a.id).addEventListener("pointerenter", this.enter)
     );
-    data.map(a =>
+    this.unsubscribePointerLeave = data.map(a =>
       document.getElementById(a.id).addEventListener("pointerleave", this.leave)
     );
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress);
     document.removeEventListener("keyup", this.handleKeyUp);
-    data.map(a =>
-      document
-        .getElementById(a.id)
-        .removeEventListener("pointerdown", this.click)
-    );
-    data.map(a =>
-      document
-        .getElementById(a.id)
-        .removeEventListener("pointerenter", this.enter)
-    );
-    data.map(a =>
-      document
-        .getElementById(a.id)
-        .removeEventListener("pointerleave", this.leave)
-    );
+    this.unsubscribePointerDown();
+    this.unsubscribePointerEnter();
+    this.unsubscribePointerLeave();
   }
 
   enter = e => {
@@ -82,53 +68,33 @@ class Keyboard extends Component {
 
   click = e => {
     e.preventDefault();
-    this.props.onEnter(e.target.textContent); //cia pakeisti peles klickas
+    this.props.onEnter(e.target.textContent);
   };
 
   handleKeyUp = event => {
-    setTimeout(
-      () =>
-        this.setState({
-          activeId: ""
-        }),
-      600
-    );
+    this.setState({
+      activeId: ""
+    });
   };
 
   handleKeyPress = event => {
     let idObject = data.filter(a => event.keyCode === a.keyCode);
-
     event.preventDefault();
     if (idObject.length > 0) {
       this.setState({
         activeId: idObject[0].id
       });
-
       return this.props.onEnter(idObject[0].value);
     }
   };
 
   render() {
-    const { activeId } = this.state;   
-    return (                            //vel grazinti i map galima
+    const { activeId } = this.state;
+    return (
       <div id="keyboard">
-        <Button id={"clear"} value={"AC"} activeId={activeId} />
-        <Button id={"divide"} value={"/"} activeId={activeId} />
-        <Button id={"multiply"} value={"*"} activeId={activeId} />
-        <Button id={"seven"} value={7} activeId={activeId} />
-        <Button id={"eight"} value={8} activeId={activeId} />
-        <Button id={"nine"} value={9} activeId={activeId} />
-        <Button id={"substract"} value={"-"} activeId={activeId} />
-        <Button id={"four"} value={4} activeId={activeId} />
-        <Button id={"five"} value={5} activeId={activeId} />
-        <Button id={"six"} value={6} activeId={activeId} />
-        <Button id={"plus"} value={"+"} activeId={activeId} />
-        <Button id={"one"} value={1} activeId={activeId} />
-        <Button id={"two"} value={2} activeId={activeId} />
-        <Button id={"tree"} value={3} activeId={activeId} />
-        <Button id={"zero"} value={0} activeId={activeId} />
-        <Button id={"decimal"} value={"."} activeId={activeId} />
-        <Button id={"equals"} value={"="} activeId={activeId} />
+        {data.map(a => (
+          <Button id={a.id} key={a.id} value={a.value} activeId={activeId} />
+        ))}
       </div>
     );
   }

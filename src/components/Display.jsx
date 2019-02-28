@@ -4,37 +4,40 @@ import { connect } from "react-redux";
 
 const mapStateToProps = state => {
   return {
-    states: state
+    arrMemory: state.arrMemory,
+    answer: state.answer,
+    arrNow: state.arrNow,
+    answerShort: state.answerShort
   };
 };
 
 class Display extends Component {
   render() {
-    
+    const { arrMemory, answer, arrNow, answerShort } = this.props;
     return (
       <div id="display">
-      {console.log(this.props.states)}
-        <DispalyOutput activeId={this.props.states.arrMemory} answer={this.props.states.answer} />
-        <DispalyInput activeId={this.props.states.arrNow} answerShort={this.props.states.answerShort} />
+        <DispalyOutput activeId={arrMemory} answer={answer} />
+        <DispalyInput activeId={arrNow} answerShort={answerShort} />
       </div>
     );
   }
 }
-function DispalyInput(props) {
-  console.log(props)
-  return <div className="displays" id="input">
-  {props.activeId}
-  {props.answerShort}
-  </div>;
-
-}
-function DispalyOutput(props) {
-  return <div className="displays">
-  {props.activeId}
-  {props.answer}
-  
-  </div>;
-}
+const DispalyInput = ({ activeId, answerShort }) => {
+  return (
+    <div className="displays" id="input">
+      {activeId}
+      {answerShort}
+    </div>
+  );
+};
+const DispalyOutput = ({ activeId, answer }) => {
+  return (
+    <div className="displays">
+      {activeId}
+      {answer}
+    </div>
+  );
+};
 
 export default connect(
   mapStateToProps,
