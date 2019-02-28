@@ -1,37 +1,15 @@
-import React, { Component } from 'react';
+import React from "react";
 
-class Button extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          hasCapture: false
-        };
-      }
-
-      onEnter = e => {
-        this.setState({ hasCapture: true });
-      };
-      onLeave = e => {
-        this.setState({ hasCapture: false });
-      };
-
-    render(){
-        const styles = {
-            backgroundColor: this.state.hasCapture ? "pink" : "white"
-        }
+const Button = ({id, value, activeId}) => {
+    
     return (
-            
-             <div 
-                className="button" 
-                id={this.props.id}
-                onPointerEnter={this.onEnter}
-                onPointerLeave={this.onLeave}
-                style = {styles}>
-                {this.props.value}
-            </div>
-          
-    )}
+      <div className="button"
+         id={id}
+         style={{backgroundColor: activeId === id ? "pink" : "white"}}>
+        {value}
+      </div>
+    );
+  
 }
-
 
 export default Button;

@@ -1,48 +1,42 @@
-import React, { Component } from 'react';
-import data from "./data.js";
-//problems with props, it lags ":(("
-class Display extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      numberGiven: "",
-      signGiven: '',
-      memory: []
-    };
-  }
-  componentWillMount(){
-    this.onMountAndProps();
-  }
-  componentWillReceiveProps(){
-    this.onMountAndProps();
-  }
-  onMountAndProps = ()=> {
-    const rightObject = data.filter(a => a.id === this.props.id);
-    if (rightObject[0].value > 0 ){
-     this.setState({
-       numberGiven: rightObject[0].value
-     });
-    }
-    this.setState({
-     signGiven: rightObject[0].value
-   });
+import React, { Component } from "react";
+
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+  return {
+    states: state
   };
+};
 
-    render(){
+class Display extends Component {
+  render() {
+    
     return (
-            <div id="display">
-              <DispalyOutput />
-              <DispalyInput id={this.props.id} />
-              {console.log(this.state.numberGiven)}
-            </div>
-    )}
+      <div id="display">
+      {console.log(this.props.states)}
+        <DispalyOutput activeId={this.props.states.arrMemory} answer={this.props.states.answer} />
+        <DispalyInput activeId={this.props.states.arrNow} answerShort={this.props.states.answerShort} />
+      </div>
+    );
+  }
 }
-  function DispalyInput (props){
-    return <div className="displays">{props.id}</div>
-  }
-  function DispalyOutput (props){
-    return <div className="displays"></div>  
-  }
-  
+function DispalyInput(props) {
+  console.log(props)
+  return <div className="displays" id="input">
+  {props.activeId}
+  {props.answerShort}
+  </div>;
 
-  export default Display;
+}
+function DispalyOutput(props) {
+  return <div className="displays">
+  {props.activeId}
+  {props.answer}
+  
+  </div>;
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(Display);

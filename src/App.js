@@ -1,36 +1,21 @@
-import React, { Component } from 'react';
-import Keyboard from "./components/Keyboard";
-import Display from "./components/Display"
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import { pushReducer } from "./redux/reducer/rootReducer";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import Index from "./components/Index";
 
+const store = createStore(pushReducer);
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: "zero"
-    };
-  }
-
-  hendleInput = (id)=> {
-    this.setState({
-      id: id
-    })
-  }
-
   render() {
     return (
-      <div className="App">
-      <div id="frame">
-        <Display id={this.state.id} />
-        <Keyboard hendleInput={this.hendleInput}/>
-        {console.log(this.state.id)}
-      </div>
-        
-      </div>
+      <Provider store={store}>
+      
+        <Index />
+      </Provider>
     );
   }
 }
 
 export default App;
-
