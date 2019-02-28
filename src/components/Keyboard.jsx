@@ -1,26 +1,32 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-
-
 import data from "./data";
 import Button from "./Button";
 
-const hendleInput = (id) => {
-  return {
-  type: 'number',
-  activeId: id
-  } 
-};
+import {
+  hendleDecimal,
+  hendleEquals,
+  hendleNumber,
+  hendleSubstract,
+  hendleAction
+} from "../redux/actions";
 
-
-
-
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     onEnter: function(id) {
-      dispatch(hendleInput(id))
-    }    
+      if (id === "=") {
+        dispatch(hendleEquals(id));
+      } else if (id === ".") {
+        dispatch(hendleDecimal(id));
+      } else if (id === "-") {
+        dispatch(hendleSubstract(id));
+      } else if (id === "*" || id === "/" || id === "+") {
+        dispatch(hendleAction(id));
+      } else {
+        dispatch(hendleNumber(id));
+      }
+    }
   };
 };
 
@@ -76,9 +82,7 @@ class Keyboard extends Component {
 
   click = e => {
     e.preventDefault();
-    this.props.onEnter(e.target.textContent);  //cia pakeisti peles klickas
-  
-   
+    this.props.onEnter(e.target.textContent); //cia pakeisti peles klickas
   };
 
   handleKeyUp = event => {
@@ -99,25 +103,38 @@ class Keyboard extends Component {
       this.setState({
         activeId: idObject[0].id
       });
-      return this.props.onEnter(idObject[0].id);  //cia pakeisti klaviatura
+
+      return this.props.onEnter(idObject[0].value);
     }
   };
 
   render() {
-    return (
+    const { activeId } = this.state;   
+    return (                            //vel grazinti i map galima
       <div id="keyboard">
-        
-        {data.map(a => (
-          <Button
-            id={a.id}
-            key={a.id}
-            value={a.value}
-            activeId={this.state.activeId}
-          />
-        ))}
+        <Button id={"clear"} value={"AC"} activeId={activeId} />
+        <Button id={"divide"} value={"/"} activeId={activeId} />
+        <Button id={"multiply"} value={"*"} activeId={activeId} />
+        <Button id={"seven"} value={7} activeId={activeId} />
+        <Button id={"eight"} value={8} activeId={activeId} />
+        <Button id={"nine"} value={9} activeId={activeId} />
+        <Button id={"substract"} value={"-"} activeId={activeId} />
+        <Button id={"four"} value={4} activeId={activeId} />
+        <Button id={"five"} value={5} activeId={activeId} />
+        <Button id={"six"} value={6} activeId={activeId} />
+        <Button id={"plus"} value={"+"} activeId={activeId} />
+        <Button id={"one"} value={1} activeId={activeId} />
+        <Button id={"two"} value={2} activeId={activeId} />
+        <Button id={"tree"} value={3} activeId={activeId} />
+        <Button id={"zero"} value={0} activeId={activeId} />
+        <Button id={"decimal"} value={"."} activeId={activeId} />
+        <Button id={"equals"} value={"="} activeId={activeId} />
       </div>
     );
   }
 }
 
-export default connect(null, mapDispatchToProps)(Keyboard);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Keyboard);

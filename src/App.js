@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { pushReducer } from "./redux/reducer/rootReducer";
+import { pushReducer } from "./redux/rootReducer";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Index from "./components/Index";
