@@ -5,7 +5,7 @@ const Button = ({id, value, activeId}) => {
     return (
       <div className="button" 
          id={id}
-         style={{backgroundColor: activeId === id ? "pink" : "white"}}>
+         style={{backgroundColor: activeId === id ? "pink" : "lightgreen"}}>
         {value}
       </div>
     );

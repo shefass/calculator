@@ -24,7 +24,7 @@ class Display extends Component {
 }
 const DispalyInput = ({ activeId, answerShort }) => {
   return (
-    <div className="displays" id="input">
+    <div className="displays">
       {activeId}
       {answerShort}
     </div>

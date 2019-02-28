@@ -8,38 +8,44 @@
 }
 
 #frame {
-  border: 2px solid blueviolet;
-  
+  border: 1px solid brown;
+  background-color: blueviolet;
   border-radius: 25px;
   height: 80%;
+  min-width: 20em;
   width: 30%;
   display: flex;
   flex-direction: column;
 }
 #display {
-
+  background-color: brown;
+  border: 1px solid azure;
+  border-radius: 25px;
+  margin: 0.6em;
   height: 20%;
   display: flex;
   flex-direction: column;
-  
+  padding-right: 0.4em;
+  padding-left: 0.4em;
+  color: white;
+  font-size: 1.5em;
+  overflow: hidden;
 }
 .displays {
-  border: 2px solid blueviolet;
-  height: 50%;
-  text-align: right;
   
-}
-#input {
-  border: 2px solid red;
+  height: 50%;
+  
+  display: flex;
+  justify-content:  flex-end;
+  align-items: center;
 }
 
+
 #keyboard {
-  
   height: 80%;
   
   display: grid;
   grid-template-columns: auto auto auto auto;
-  
 }
 
 .button {
