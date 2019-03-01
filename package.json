@@ -2,7 +2,7 @@
   "name": "calculator",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://shefass.github.io/calculator",
+  "homepage": "https://shefass.github.io/calculator", 
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

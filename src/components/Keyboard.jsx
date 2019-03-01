@@ -37,7 +37,7 @@ class Keyboard extends Component {
     document.addEventListener("keydown", this.handleKeyPress);
     document.addEventListener("keyup", this.handleKeyUp);
     this.unsubscribePointerDown = data.map(a =>
-      document.getElementById(a.id).addEventListener("pointerdown", this.click)
+      document.getElementById(a.id).addEventListener("mousedown", this.click) //for iOS support you cant use pointerdown
     );
     this.unsubscribePointerEnter = data.map(a =>
       document.getElementById(a.id).addEventListener("pointerenter", this.enter)
@@ -67,6 +67,7 @@ class Keyboard extends Component {
   };
 
   click = e => {
+    console.log(e);
     e.preventDefault();
     this.props.onEnter(e.target.textContent);
   };
