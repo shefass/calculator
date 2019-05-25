@@ -37,23 +37,30 @@ class Keyboard extends Component {
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
     document.addEventListener("keyup", this.handleKeyUp);
-    this.unsubscribePointerDown = data.map(
+    data.map(
       a =>
         document.getElementById(a.id).addEventListener("mousedown", this.click) //for iOS support you cant use pointerdown
     );
-    this.unsubscribePointerEnter = data.map(a =>
+    data.map(a =>
       document.getElementById(a.id).addEventListener("pointerenter", this.enter)
     );
-    this.unsubscribePointerLeave = data.map(a =>
+    data.map(a =>
       document.getElementById(a.id).addEventListener("pointerleave", this.leave)
     );
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress);
     document.removeEventListener("keyup", this.handleKeyUp);
-    this.unsubscribePointerDown();
-    this.unsubscribePointerEnter();
-    this.unsubscribePointerLeave();
+    data.map(
+      a =>
+        document.getElementById(a.id).removeEventListener("mousedown", this.click) //for iOS support you cant use pointerdown
+    );
+    data.map(a =>
+      document.getElementById(a.id).removeEventListener("pointerenter", this.enter)
+    );
+    data.map(a =>
+      document.getElementById(a.id).removeEventListener("pointerleave", this.leave)
+    );
   }
 
   enter = e => {
