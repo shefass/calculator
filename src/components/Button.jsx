@@ -1,15 +1,23 @@
 import React from "react";
+import styled from "styled-components";
 
 const Button = ({id, value, activeId}) => {
     
     return (
-      <div className="button" 
+      <StyledButton 
          id={id}
          style={{backgroundColor: activeId === id ? "pink" : "lightgreen"}}>
         {value}
-      </div>
+      </StyledButton>
     );
   
 }
 
+const StyledButton = styled.div`
+border: 2px solid blueviolet;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 export default Button;

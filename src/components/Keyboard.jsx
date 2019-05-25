@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import data from "./data";
 import Button from "./Button";
+import styled from "styled-components";
 import {
   hendleDecimal,
   hendleEquals,
@@ -36,8 +37,9 @@ class Keyboard extends Component {
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
     document.addEventListener("keyup", this.handleKeyUp);
-    this.unsubscribePointerDown = data.map(a =>
-      document.getElementById(a.id).addEventListener("mousedown", this.click) //for iOS support you cant use pointerdown
+    this.unsubscribePointerDown = data.map(
+      a =>
+        document.getElementById(a.id).addEventListener("mousedown", this.click) //for iOS support you cant use pointerdown
     );
     this.unsubscribePointerEnter = data.map(a =>
       document.getElementById(a.id).addEventListener("pointerenter", this.enter)
@@ -67,7 +69,6 @@ class Keyboard extends Component {
   };
 
   click = e => {
-    console.log(e);
     e.preventDefault();
     this.props.onEnter(e.target.textContent);
   };
@@ -92,14 +93,20 @@ class Keyboard extends Component {
   render() {
     const { activeId } = this.state;
     return (
-      <div id="keyboard">
+      <StyledKeyboard>
         {data.map(a => (
           <Button id={a.id} key={a.id} value={a.value} activeId={activeId} />
         ))}
-      </div>
+      </StyledKeyboard>
     );
   }
 }
+
+const StyledKeyboard = styled.div`
+  height: 80%;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+`;
 
 export default connect(
   null,
