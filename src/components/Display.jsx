@@ -49,7 +49,7 @@ const StyledDisplays = styled.div`
 const StyledDisplay = styled.div`
   background-color: brown;
   border: 1px solid azure;
-  border-radius: 25px;
+  border-radius: 15px;
   margin: 0.6rem;
   height: 20%;
   display: flex;
@@ -57,7 +57,7 @@ const StyledDisplay = styled.div`
   padding-right: 0.4em;
   padding-left: 0.4em;
   color: white;
-  font-size: 1.5em;
+  font-size: 1.2em;
   overflow: hidden;
   @media (max-height: 400px) {
     margin: 0.1rem;

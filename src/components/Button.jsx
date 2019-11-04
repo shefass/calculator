@@ -15,7 +15,7 @@ const Button = ({id, value, activeId}) => {
 
 const StyledButton = styled.div`
 border: 2px solid blueviolet;
-  border-radius: 25px;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;

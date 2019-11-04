@@ -25,10 +25,10 @@ const StyledWrapper = styled.div`
 const StyledFrame = styled.div`
   border: 1px solid brown;
   background-color: blueviolet;
-  border-radius: 25px;
+  border-radius: 10px;
   height: 80%;
-  min-width: 20em;
-  width: 30%;
+  min-width: 13em;
+  width: 20%;
   display: flex;
   flex-direction: column;
 `;
